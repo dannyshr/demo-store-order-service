@@ -42,6 +42,11 @@ async function bootstrap() {
   // Call the function to validate the environment variables
   await validateEnvironmentVariables(configService, logger);
 
+  const portString = configService.get<string>('PORT') ?? '3000'; // Fallback to '3000' as a string
+
+  // 2. Convert the string to a number using parseInt.
+  // Always specify the radix (base) as 10 for decimal numbers to avoid unexpected behavior.
+  const app_port = parseInt(portString, 10);
   const corsOrigin = configService.get<string>('CORS_ORIGIN');
   
   // Check for null, undefined, or empty string
@@ -77,7 +82,7 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document); // Access Swagger UI at /api
 
-  await app.listen(3000); // NestJS app will run on port 3000
+  await app.listen(app_port); // NestJS app will run on port 3000
   console.log(`NestJS application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
