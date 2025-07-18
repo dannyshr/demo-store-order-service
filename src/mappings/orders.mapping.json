@@ -1,0 +1,20 @@
+{
+  "properties": {
+    "customer": {
+      "properties": {
+        "fullName": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
+        "fullAddress": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
+        "email": { "type": "keyword" }
+      }
+    },
+    "products": {
+      "type": "nested",
+      "properties": {
+        "category": { "type": "keyword" },
+        "name": { "type": "text", "fields": { "keyword": { "type": "keyword" } } },
+        "quantity": { "type": "integer" }
+      }
+    },
+    "orderDate": { "type": "date" }
+  }
+}
