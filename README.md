@@ -1,98 +1,136 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 📦 demo-store-order-service
+This repository contains the NestJS API for the Demo Store, responsible for handling order processing and related logic. 
+It acts as a backend service, potentially interacting with other services or a database.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Url: https://demostoreorders-dannys-bfbreje3cnfgaubf.israelcentral-01.azurewebsites.net/api
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# ✨ Features
+Order Processing: Handles creation, retrieval, and management of orders.
 
-## Description
+API Endpoints: Exposes RESTful endpoints for order operations.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Modular Architecture: Built with NestJS for a scalable and maintainable structure.
 
-## Project setup
+# 🚀 Getting Started (Local Development)
+To get this API running on your local machine, ensure you have the following:
 
-```bash
-$ npm install
-```
+## Prerequisites
+Node.js (v22.x or later): Download & Install Node.js
 
-## Compile and run the project
+npm (comes with Node.js) or Yarn
 
-```bash
-# development
-$ npm run start
+Git: Download & Install Git
 
-# watch mode
-$ npm run start:dev
+NestJS CLI:
 
-# production mode
-$ npm run start:prod
-```
+npm install -g @nestjs/cli
 
-## Run tests
+## Installation
+Clone the repository:
 
-```bash
-# unit tests
-$ npm run test
+git clone https://github.com/dannyshr/demo-store-product-service.git
 
-# e2e tests
-$ npm run test:e2e
+cd demo-store-order-service
 
-# test coverage
-$ npm run test:cov
-```
+Install dependencies:
 
-## Deployment
+npm install OR yarn install
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+Configure Environment Variables for Local Development:
+Create a .env file in the root of your project. This file will hold environment variables specific to your local setup.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+PORT="3000" Or your desired local port
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+CORS_ORIGIN="http://localhost:3001"  Or your demo-store-frontend url
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+ELASTICSEARCH_URL=""
 
-## Resources
+ELASTICSEARCH_API_KEY=""
 
-Check out a few resources that may come in handy when working with NestJS:
+Note: Ensure your src/main.ts is configured to use process.env.PORT.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+## Running Locally
+Build the application:
 
-## Support
+npm run build
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+This compiles the TypeScript code into JavaScript, outputting to the dist folder.
 
-## Stay in touch
+Start the application:
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+npm run start:dev OR yarn start:dev
 
-## License
+## API Endpoints (Local)
+Base URL: http://localhost:3001
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Orders: http://localhost:3001/orders
+
+Swagger UI: If configured, typically http://localhost:3001/api or http://localhost:3001/api-docs
+
+# ☁️ Deployment (CI/CD)
+This application is deployed to Azure App Service (Web App) for Linux using a GitHub Actions pipeline.
+
+Azure Services Used: 
+Azure App Service (Linux) - Hosts the NestJS API.
+
+CI/CD Pipeline Overview: 
+The deployment pipeline is defined in .github/workflows/main_demostoreorders-dannys.yml
+
+Trigger: The pipeline automatically triggers on pushes to the main branch.
+
+Build: Node.js dependencies are installed, and the NestJS application is built (npm run build).
+
+Deploy: The azure/webapps-deploy@v2 action installs the compiled dist folder to the Azure App Service.
+
+Startup Command: The Azure App Service is configured with a Startup Command (node dist/main.js) to correctly launch the NestJS application.
+
+Environment Variables in Azure
+The following environment variables are configured as Application Settings in your Azure App Service resource in the Azure Portal (under Configuration > Application settings). These are critical for your NestJS app's runtime behavior.
+
+NODE_ENV: production (recommended for production deployments).
+
+PORT: Azure automatically injects the port your app should listen on (typically 8080 for Linux App Services). Ensure your main.ts uses process.env.PORT.
+
+CORS_ORIGINS__0: https://lemon-plant-0e3b51d03.1.azurestaticapps.net/ (Your Azure deployed frontend URL)
+
+ELASTICSEARCH_URL=""
+ELASTICSEARCH_API_KEY=""
+
+# 🌐 Deployed API Endpoints
+Base URL: https://demostoreorders-dannys-bfbreje3cnfgaubf.israelcentral-01.azurewebsites.net
+
+Orders: https://demostoreorders-dannys-bfbreje3cnfgaubf.israelcentral-01.azurewebsites.net/orders
+
+Swagger UI: If configured, typically https://demostoreorders-dannys-bfbreje3cnfgaubf.israelcentral-01.azurewebsites.net/api
+
+# 📂 Project Structure
+.
+
+├── src/                   # Source code
+
+│   ├── main.ts            # Application entry point
+
+│   ├── app.module.ts
+
+│   ├── orders/            # Orders module
+
+│   └── ...
+
+├── dist/                  # Compiled JavaScript output (generated by `npm run build`)
+
+├── node_modules/
+
+├── package.json
+
+├── tsconfig.json
+
+├── .github/
+
+│   └── workflows/         # GitHub Actions workflow file
+
+├── .env                   # Local environment variables (ignored by Git)
+
+└── README.md
+
+# 📄 License
+Public
