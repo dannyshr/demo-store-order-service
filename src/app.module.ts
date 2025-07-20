@@ -2,10 +2,9 @@
 
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-// Removed: import { AppController } from './app.controller';
-// Removed: import { AppService } from './app.service';
 import { OrdersModule } from './orders/orders.module';
 import { ElasticsearchModule } from './elasticsearch/elasticsearch.module';
+import { KeyVaultConfigService } from './config/keyvault.config';
 
 @Module({
   imports: [
@@ -17,7 +16,8 @@ import { ElasticsearchModule } from './elasticsearch/elasticsearch.module';
     OrdersModule,
     ElasticsearchModule
   ],
-  controllers: [], // Now empty
-  providers: [],   // Now empty
+  controllers: [],
+  providers: [KeyVaultConfigService],
+  exports: [KeyVaultConfigService],
 })
 export class AppModule {}

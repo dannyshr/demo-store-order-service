@@ -43,9 +43,11 @@ PORT="3000" Or your desired local port
 
 CORS_ORIGIN="http://localhost:3001"  Or your demo-store-frontend url
 
-ELASTICSEARCH_URL=""
+ELASTICSEARCH_INDEX_NAME="orders"
 
-ELASTICSEARCH_API_KEY=""
+FETCH_RESULTS_MAX="1000"
+
+KEY_VAULT_URI="https://demostore-kv.vault.azure.net/"
 
 Note: Ensure your src/main.ts is configured to use process.env.PORT.
 
@@ -93,8 +95,17 @@ PORT: Azure automatically injects the port your app should listen on (typically 
 
 CORS_ORIGINS__0: https://lemon-plant-0e3b51d03.1.azurestaticapps.net/ (Your Azure deployed frontend URL)
 
-ELASTICSEARCH_URL=""
-ELASTICSEARCH_API_KEY=""
+ELASTICSEARCH_INDEX_NAME="orders"
+
+FETCH_RESULTS_MAX="1000"
+
+KEY_VAULT_URI="https://demostore-kv.vault.azure.net/"
+
+### Key Vault Secrets in Azure
+
+OrderService-Elastic-Url=""
+
+OrderService-Elastic-ApiKey=""
 
 # 🌐 Deployed API Endpoints
 Base URL: https://demostoreorders-dannys-bfbreje3cnfgaubf.israelcentral-01.azurewebsites.net

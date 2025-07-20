@@ -12,8 +12,9 @@ async function validateEnvironmentVariables(configService: ConfigService, logger
   const requiredEnvVars = [
     'PORT',
     'CORS_ORIGIN',
-    'ELASTICSEARCH_URL',
-    'ELASTICSEARCH_API_KEY',
+    'ELASTICSEARCH_INDEX_NAME',
+    'FETCH_RESULTS_MAX',
+    'KEY_VAULT_URI'
   ];
 
   const missingVars: string[] = [];

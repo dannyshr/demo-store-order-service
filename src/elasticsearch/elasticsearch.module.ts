@@ -2,9 +2,16 @@
 
 import { Module } from '@nestjs/common';
 import { ElasticsearchService } from './elasticsearch.service';
+import { ConfigModule } from '@nestjs/config';
+import { KeyVaultConfigService } from '../config/keyvault.config';
 
 @Module({
-  providers: [ElasticsearchService], // Register ElasticsearchService as a provider
-  exports: [ElasticsearchService],   // Export it so other modules can use it
-})
-export class ElasticsearchModule {}
+  imports: [
+    ConfigModule,
+  ],
+  providers: [
+    ElasticsearchService,
+    KeyVaultConfigService
+  ],
+  exports: [ElasticsearchService],
+})export class ElasticsearchModule {}
