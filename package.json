@@ -24,6 +24,8 @@
     "start:prod-build": "cross-env NODE_ENV=production nest build && node dist/main"
   },
   "dependencies": {
+    "@azure/identity": "^4.10.2",
+    "@azure/keyvault-secrets": "^4.10.0",
     "@elastic/elasticsearch": "^9.0.3",
     "@nestjs/common": "^11.0.1",
     "@nestjs/config": "^4.0.2",

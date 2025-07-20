@@ -15,7 +15,7 @@ export class OrdersService {
   // Inject ElasticsearchService into the OrdersService constructor
   constructor(private readonly configService: ConfigService, private readonly elasticsearchService: ElasticsearchService) {
     this.indexName = configService.get<string>('ELASTICSEARCH_INDEX_NAME') || '';
-    this.maxResults = parseInt(configService.get<string>('FETCH_RESULTS_MAX') || '') || 1000;
+    this.maxResults = parseInt(configService.get<string>('FETCH_RESULTS_MAX') || '', 10) || 1000;
   }
 
   async createOrder(createOrderDto: CreateOrderDto) {

@@ -3,7 +3,7 @@
 import { Injectable, OnModuleInit, Logger, InternalServerErrorException, BadRequestException } from '@nestjs/common';
 import { Client } from '@elastic/elasticsearch';
 import { ConfigService } from '@nestjs/config';
-import { getElasticsearchConfig } from '../config/elasticsearch.config';
+import { KeyVaultConfigService } from '../config/keyvault.config';
 import { GetResponse, SearchResponse } from '@elastic/elasticsearch/lib/api/types';
 import { plainToInstance } from 'class-transformer';
 import * as fs from 'fs/promises';
@@ -11,41 +11,61 @@ import * as path from 'path';
 
 @Injectable()
 export class ElasticsearchService implements OnModuleInit {
-  private readonly esClient: Client;
   private readonly logger = new Logger(ElasticsearchService.name);
+  private esClient: Client;
   private ordersMapping: any;
   private indexName: string;
 
-  constructor(private readonly configService: ConfigService) {
-    // get the client options object before passing it to the Client constructor
-    const clientOptions = getElasticsearchConfig(this.configService);
-    this.esClient = new Client(clientOptions);
-    this.indexName = configService.get<string>('ELASTICSEARCH_INDEX_NAME') || '';
-
-    // log the properties from the 'clientOptions' object
+  constructor(private readonly configService: ConfigService, private readonly keyVaultConfigService: KeyVaultConfigService) {
+    // log the environment variables from the 'configService' object
+    this.logger.log('ElasticsearchService(): Start logging environment variables ****');
     this.logger.log(`NODE_ENV: ${this.configService.get('NODE_ENV')}`);
-    this.logger.log(`ELASTICSEARCH_URL (from ConfigService): ${this.configService.get('ELASTICSEARCH_URL')}`);
-    this.logger.log(`ELASTICSEARCH_API_KEY (from ConfigService): ${this.configService.get('ELASTICSEARCH_API_KEY')}`);
-    this.logger.log('ELASTICSEARCH_INDEX_NAME (from ConfigService): ', this.indexName);
-    this.logger.log(`Final elasticsearchConfig.node: ${clientOptions.node}`); // Log from clientOptions
+    this.logger.log(`PORT=[${this.configService.get('PORT')}] (from ConfigService)`);
+    this.logger.log(`CORS_ORIGIN=[${this.configService.get('CORS_ORIGIN')}] (from ConfigService)`);
+    this.logger.log(`ELASTICSEARCH_INDEX_NAME=[${this.configService.get('ELASTICSEARCH_INDEX_NAME')}] (from ConfigService)`);
+    this.logger.log(`FETCH_RESULTS_MAX=[${this.configService.get('FETCH_RESULTS_MAX')}] (from ConfigService)`);
+    this.logger.log(`KEY_VAULT_URI=[${this.configService.get('KEY_VAULT_URI')}] (from ConfigService)`);
+    this.logger.log('ElasticsearchService(): End logging environment variables ****');
+
+    //set the index name
+    this.indexName = configService.get<string>('ELASTICSEARCH_INDEX_NAME') || '';
     
     // Safely access apiKey from clientOptions.auth
     if (!this.indexName) {
       this.logger.error('indexName is empty or null !!');
     }
-    if (clientOptions.auth && 'apiKey' in clientOptions.auth) {
-      this.logger.log(`Final elasticsearchConfig.auth.apiKey: ${clientOptions.auth.apiKey}`);
-    } 
-    else if (clientOptions.auth) {
-      this.logger.log(`Final elasticsearchConfig.auth: (Auth object present, but no apiKey property)`);
-    } 
-    else {
-      this.logger.log(`Final elasticsearchConfig.auth: (No auth object)`);
-    }
   }
 
   async onModuleInit() {
+    let methodName = 'onModuleInit():';
     await this.loadOrdersMapping();
+
+    //fetch elastic search url and api key from environment variables
+    //let node = this.configService.get<string>('OrderService-Elastic-Url') || '';
+    //let apiKey = this.configService.get<string>('OrderService-Elastic-ApiKey') || '';
+
+    //fetch elastic search url and api key from key vault
+    let node = await this.keyVaultConfigService.getSecret('OrderService-Elastic-Url') || '';
+    let apiKey = await this.keyVaultConfigService.getSecret('OrderService-Elastic-ApiKey') || '';
+    const clientOptions = {
+      node: node,
+      auth: apiKey ? { apiKey: apiKey } : undefined,
+    };
+
+    //check for valid values
+    if (!node || node.trim()==='') {
+      const errorMessage = `${methodName} OrderService-Elastic-Url is empty or null !!`;
+      this.logger.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+    if (!apiKey || apiKey.trim()==='') {
+      const errorMessage = `${methodName} OrderService-Elastic-ApiKey is empty or null !!`;
+      this.logger.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
+    //set the elasticsearch client and check the index
+    this.esClient = new Client(clientOptions);
     await this.checkAndCreateIndex(this.indexName);
   }
 
